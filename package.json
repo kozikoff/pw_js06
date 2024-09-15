@@ -2,7 +2,10 @@
   "name": "pw_js06",
   "version": "1.0.0",
   "main": "index.js",
-  "scripts": {},
+  "scripts": {
+    "debug" :"npx playwright test --ui",
+    "test": "npx playwright test"
+  },
   "keywords": [],
   "author": "",
   "license": "ISC",
@@ -12,6 +15,7 @@
     "@playwright/test": "^1.47.0",
     "@types/node": "^22.5.4",
     "eslint": "^9.10.0",
-    "globals": "^15.9.0"
+    "globals": "^15.9.0",
+    "@faker-js/faker": "^8.4.1"
   }
 }
