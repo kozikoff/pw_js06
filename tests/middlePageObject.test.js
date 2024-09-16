@@ -1,9 +1,6 @@
 import {test, expect} from '@playwright/test';
 import {faker} from '@faker-js/faker';
-import {MainPage, RegisterPage, SettingsPage} from '../src/pages/index';
-import {EditorPage} from "../src/pages/editor.page";
-import {Article} from "../src/models/article";
-import {ArticlePage} from "../src/pages/article.page";
+import {MainPage, RegisterPage, SettingsPage, EditorPage, ArticlePage, Article} from '../src/pages/index';
 
 const url = 'https://realworld.qa.guru/#/';
 let newUser;
@@ -44,6 +41,7 @@ test.describe('Page Object', () => {
         await mainPage.goToEditor();
         await editorPage.publishNewArticle(expectedArticle);
 
+        await expect(articlePage.articleHeader).toBeVisible();
         actualArticle = await articlePage.getArticle();
         await expect(actualArticle.title).toEqual(expectedArticle.title);
         await expect(actualArticle.body).toEqual(expectedArticle.body);
@@ -55,9 +53,10 @@ test.describe('Page Object', () => {
         const mainPage = new MainPage(page);
         const articlePage = new ArticlePage(page);
 
-        await mainPage.emptyListShouldBeVisible();
+        await expect(mainPage.emptyListMessage).toBeVisible();
         await mainPage.open(url + 'article/bj-rk-gu-mundsd-ttirr');
 
+        await expect(articlePage.articleHeader).toBeVisible();
         actualArticle = await articlePage.getArticle();
         await expect(actualArticle.title).toEqual('Björk Guðmundsdóttirr');
         await expect(actualArticle.body).toEqual('एक जल्दी भूरी लोमड़ी आलसी कुत्ते पर कूदता');
