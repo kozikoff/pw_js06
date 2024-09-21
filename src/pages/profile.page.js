@@ -1,5 +1,4 @@
 import {BasePage} from "./base.page";
-import {expect} from "@playwright/test";
 
 export class ProfilePage extends BasePage {
     constructor(page) {
@@ -9,7 +8,6 @@ export class ProfilePage extends BasePage {
     }
 
     async getArticleHeaders() {
-        await expect(this.articleHeaders.first()).toBeVisible();
         return await this.articleHeaders.allInnerTexts();
     }
 

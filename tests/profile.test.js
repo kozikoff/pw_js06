@@ -1,7 +1,5 @@
 import {expect, test} from '@playwright/test';
-import {LoginPage} from "../src/pages/login.page";
-import {ProfilePage} from "../src/pages/profile.page";
-import {MainPage} from "../src/pages";
+import {LoginPage, ProfilePage, MainPage} from '../src/pages/index';
 
 const url = 'https://realworld.qa.guru/#/';
 const user = {
@@ -23,19 +21,21 @@ test.describe('Profile tests', () => {
     test('A user should be able to view his published articles on the profile page', async ({page}) => {
         const mainPage = new MainPage(page);
         const profilePage = new ProfilePage(page);
-        await mainPage.emptyListShouldBeVisible();
+        await expect(mainPage.emptyListMessage).toBeVisible();
 
         await mainPage.open(url + 'profile/John%20Smith');
+        await expect(profilePage.articleHeaders.first()).toBeVisible();
         await expect(await profilePage.getArticleHeaders()).toEqual(['Björk Guðmundsdóttirr', 'Björk Guðmundsdóttir']);
     });
 
     test('A user should be able to view his favorite articles on the profile page', async ({page}) => {
         const mainPage = new MainPage(page);
         const profilePage = new ProfilePage(page);
-        await mainPage.emptyListShouldBeVisible();
+        await expect(mainPage.emptyListMessage).toBeVisible();
 
         await mainPage.open(url + 'profile/John%20Smith');
         await profilePage.goToFavoriteArticles();
+        await expect(profilePage.articleHeaders.first()).toBeVisible();
         await expect(await profilePage.getArticleHeaders()).toEqual(['Björk Guðmundsdóttirr']);
     });
 });
